@@ -1,0 +1,249 @@
+<title>Divyajivan Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: fixed WebGL particle world behind a vertical scroll story; text panels float over it, left-aligned with generous air. */
+:root{
+  --void:#03080B; --deep:#071A1F; --ink:#EAF6F1; --mute:#8FB3AA;
+  --leaf:#5BD46B; --sky:#4FB8EE; --gold:#E8C77A; --line:rgba(234,246,241,.14);
+  --display:'Unbounded','Segoe UI',system-ui,sans-serif;
+  --body:'Instrument Sans','Segoe UI',system-ui,sans-serif;
+  color-scheme:dark;
+}
+html,body{background:var(--void);color:var(--ink)}
+body{font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden}
+#gl{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:0}
+.veil{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 120%,rgba(7,26,31,.0),rgba(3,8,11,.55) 70%)}
+nav{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:calc(18px + env(safe-area-inset-top,0px)) clamp(16px,4vw,48px) 18px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:.01em}
+.brand img{width:38px;height:auto}
+.brand b{color:var(--sky);font-weight:600}.brand i{color:var(--leaf);font-style:normal}
+.pill{border:1px solid var(--line);background:rgba(7,26,31,.5);backdrop-filter:blur(10px);color:var(--ink);text-decoration:none;padding:10px 18px;border-radius:999px;font-size:14px;font-weight:600;white-space:nowrap}
+.pill:hover,.pill:focus-visible{border-color:var(--leaf);outline:none}
+main{position:relative;z-index:2}
+section{min-height:100vh;display:flex;align-items:center;padding-inline:clamp(16px,6vw,96px);padding-block:120px}
+.wrap{max-width:620px;min-width:0}
+.right{justify-content:flex-end}
+.center{justify-content:center;text-align:center}.center .wrap{max-width:780px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+h1,h2{font-family:var(--display);font-weight:800;line-height:1.02;letter-spacing:-.02em;text-wrap:balance;margin:.35em 0 .4em}
+h1{font-size:clamp(40px,7.4vw,104px)}
+h2{font-size:clamp(32px,4.8vw,64px)}
+h1 em,h2 em{font-style:normal;background:linear-gradient(90deg,var(--sky),var(--leaf));-webkit-background-clip:text;background-clip:text;color:transparent}
+p{color:var(--mute);max-width:52ch;font-size:clamp(16px,1.3vw,19px)}
+.center p{margin-inline:auto}
+.scrollcue{margin-top:40px;display:inline-flex;align-items:center;gap:12px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.scrollcue span{width:1px;height:44px;background:linear-gradient(var(--leaf),transparent);animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(.2);transform-origin:top}50%{transform:scaleY(1)}100%{transform:scaleY(.2);transform-origin:bottom}}
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;padding:0;list-style:none}
+.facts li{border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:14px;color:var(--ink);background:rgba(7,26,31,.45);backdrop-filter:blur(6px)}
+.areas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:24px;max-width:520px}
+.areas div{border-top:1px solid var(--line);padding-top:10px;font-size:14px;color:var(--ink)}
+.areas small{display:block;color:var(--mute);font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.rem{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:26px;max-width:540px}
+.rem div{border:1px solid var(--line);border-radius:16px;padding:14px;background:rgba(7,26,31,.5);backdrop-filter:blur(8px)}
+.rem strong{display:block;font-family:var(--display);font-size:22px;color:var(--leaf)}
+.rem span{font-size:13px;color:var(--mute)}
+.get{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+.qr{background:#fff;border-radius:22px;padding:14px 14px 10px;width:180px;color:#0B3B4A;font-weight:600;font-size:15px}
+.qr img{width:152px;height:152px;display:block;margin:0 auto 6px;image-rendering:pixelated}
+.tag{margin-top:30px;font-family:var(--display);font-size:clamp(16px,1.8vw,22px);color:var(--ink)}
+.url{color:var(--leaf);user-select:all}
+footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:28px clamp(16px,6vw,96px) calc(28px + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:13px;color:var(--mute);background:rgba(3,8,11,.7)}
+.band{min-height:auto;padding-block:60px}
+.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;width:100%;border-block:1px solid var(--line);padding-block:30px;background:rgba(3,8,11,.55);backdrop-filter:blur(8px)}
+.stats div{padding-inline:14px;min-width:0}
+.stats strong{display:block;font-family:var(--display);font-weight:800;font-size:clamp(40px,5vw,72px);line-height:1;background:linear-gradient(90deg,var(--sky),var(--leaf));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stats span{font-size:14px;color:var(--mute)}
+.stack{min-height:auto}
+.wide{width:100%;max-width:1180px;margin-inline:auto;min-width:0}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:28px}
+.grid article{border:1px solid var(--line);border-radius:18px;padding:20px;background:rgba(7,26,31,.62);backdrop-filter:blur(10px);min-width:0;transition:border-color .2s,transform .2s}
+.grid article:hover{border-color:var(--leaf);transform:translateY(-3px)}
+.grid h3{font-family:var(--display);font-weight:600;font-size:17px;margin:0 0 8px;color:var(--ink)}
+.grid p{font-size:14.5px;margin:0}
+.grid .soon h3 span{font-family:var(--body);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--void);background:var(--gold);border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:middle}
+.shots{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;margin-top:28px}
+.shots figure{margin:0;min-width:0}
+.shots img{width:100%;border-radius:22px;border:6px solid #0D1B21;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.shots figure:nth-child(even){transform:translateY(34px)}
+.shots figcaption{font-size:13px;color:var(--mute);margin-top:10px;text-align:center}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:40px;align-items:start}
+.faq{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.faq li{border-left:2px solid var(--gold);padding:10px 0 10px 18px;color:var(--mute);background:rgba(3,8,11,.4)}
+.faq strong{color:var(--ink);display:block}
+@media (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.shots{grid-template-columns:repeat(3,minmax(0,1fr))}.stats{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:24px}.two{grid-template-columns:1fr}}
+@media (max-width:560px){.grid{grid-template-columns:1fr}.shots{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.progress{position:fixed;left:0;top:0;height:2px;z-index:11;background:linear-gradient(90deg,var(--sky),var(--leaf));width:0}
+@media (max-width:720px){section{min-height:auto;padding-block:110px}.right{justify-content:flex-start}.areas,.rem{grid-template-columns:repeat(2,minmax(0,1fr))}nav .pill{padding:8px 14px}}
+@media (prefers-reduced-motion:reduce){.scrollcue span{animation:none}}
+</style>
+
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="veil"></div>
+<div class="progress" id="prog"></div>
+<nav>
+  <a class="brand" href="#top"><img src="data:image/png;base64,__logo__" alt=""><span><b>Divya</b><i>jivan</i></span></a>
+  <span style="display:flex;gap:8px"><a class="pill" href="#features">Features</a><a class="pill" href="#get">Get the app</a></span>
+</nav>
+<main>
+  <section id="top"><div class="wrap">
+    <div class="eyebrow">Divyajivan · patient app</div>
+    <h1>Your Family’s Health. <em>At Your Fingertips.</em></h1>
+    <p>Every visit to a DivyaJivan hospital or clinic, its appointment, prescription, lab report, bill and vaccination, gathered in one place for every person in your home.</p>
+    <div class="scrollcue"><span></span>Scroll to enter</div>
+  </div></section>
+
+  <section class="right"><div class="wrap">
+    <div class="eyebrow">One membership</div>
+    <h2>A family head and <em>six more.</em></h2>
+    <p>The household shares one membership number. Each person keeps their own card number, so a report is always filed against the right person. The family head decides who can see whose records.</p>
+    <ul class="facts"><li>1 membership</li><li>Up to 7 people</li><li>Own card each</li></ul>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="eyebrow">Book a visit</div>
+    <h2>Hospital. Doctor. <em>Open slot.</em></h2>
+    <p>Pick from the doctor’s own calendar, for yourself or anyone at home. If the clinic moves your time, you accept or decline the new one. A follow-up set at your visit turns into three reminders.</p>
+    <div class="rem"><div><strong>3 days</strong><span>before</span></div><div><strong>1 day</strong><span>before</span></div><div><strong>Morning</strong><span>of the visit</span></div></div>
+  </div></section>
+
+  <section class="right"><div class="wrap">
+    <div class="eyebrow">Records you can read</div>
+    <h2>Results grouped by <em>body area.</em></h2>
+    <p>Read each value next to the ones before it. Prescriptions show in English, ગુજરાતી or both, with the doctor’s registration, ready to save as PDF.</p>
+    <div class="areas"><div><small>Area</small>Thyroid</div><div><small>Area</small>Heart &amp; lipids</div><div><small>Area</small>Blood sugar</div><div><small>Area</small>Kidney</div><div><small>Area</small>Liver</div><div><small>Area</small>Blood counts</div></div>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="eyebrow">Your data, your rules</div>
+    <h2>Consent you can <em>actually read.</em></h2>
+    <p>Terms, privacy and health-data consent are three separate choices. Marketing is optional and never pre-ticked. A hospital opens your record because of an appointment, a referral or your consent. You can close your account from Settings.</p>
+  </div></section>
+
+  <section class="band" aria-label="Divyajivan in numbers"><div class="stats">
+    <div><strong>7</strong><span>people on one family membership</span></div>
+    <div><strong>9</strong><span>record types for old paper reports</span></div>
+    <div><strong>6</strong><span>body areas for lab results</span></div>
+    <div><strong>3</strong><span>reminders before every follow-up</span></div>
+    <div><strong>2</strong><span>prescription languages, or both together</span></div>
+  </div></section>
+
+  <section class="stack" id="features"><div class="wide">
+    <div class="eyebrow">Everything in the app</div>
+    <h2>One home screen. <em>Every service.</em></h2>
+    <div class="grid">
+      <article><h3>Consult Doctor</h3><p>Find the right doctor at a DivyaJivan hospital and describe your symptoms when you book.</p></article>
+      <article><h3>Appointments</h3><p>Hospital, doctor, open slot. See the address and directions. Accept or decline if the clinic moves your time.</p></article>
+      <article><h3>Prescriptions</h3><p>Medicines, dosage and instructions, signed with the doctor’s council registration. Save or share as PDF.</p></article>
+      <article><h3>Lab Tests</h3><p>Book a test and give your sample at the lab, or at home where it’s offered. Health checkups like full body and diabetes care.</p></article>
+      <article><h3>My Records</h3><p>Reports, scans and prescriptions open inside the app. Upload old paper under pathology, radiology, cardiac and six more types.</p></article>
+      <article><h3>Visits, bills &amp; stays</h3><p>Every consultation, bill with payable and outstanding amounts, admission and vaccination, labelled by hospital.</p></article>
+      <article><h3>Medicine reminders</h3><p>Reminders that follow your meals, with a Stop taking option when a course ends. Never miss a dose.</p></article>
+      <article><h3>My Health</h3><p>Track daily steps and vitals like BP, SpO₂, pulse, weight and BMI, explained in words.</p></article>
+      <article><h3>Message your doctor</h3><p>Write to a clinician you have consulted. Replies come when the clinic is free.</p></article>
+      <article><h3>Memberships &amp; Insurance</h3><p>Family health card and membership plans, plus insurance and medical tourism services.</p></article>
+      <article class="soon"><h3>Telemedicine <span>Coming soon</span></h3><p>Remote consultations are on the way. Today, every booking is an in-person visit.</p></article>
+      <article class="soon"><h3>Order medicines <span>Coming soon</span></h3><p>Vitamins, diabetes, heart and pain care, or upload a prescription to get medicines delivered.</p></article>
+    </div>
+  </div></section>
+
+  <section class="stack" id="screens"><div class="wide">
+    <div class="eyebrow">Inside the app</div>
+    <h2>Real screens. <em>Real simple.</em></h2>
+    <div class="shots">
+      <figure><img src="data:image/jpeg;base64,__01-home__" alt="Home screen with family health card and services"><figcaption>One card for the whole family</figcaption></figure>
+      <figure><img src="data:image/jpeg;base64,__03-reports__" alt="My records screen listing lab reports"><figcaption>Every report in one place</figcaption></figure>
+      <figure><img src="data:image/jpeg;base64,__04-prescription__" alt="Prescription with medicines and dosage"><figcaption>Prescriptions you can read</figcaption></figure>
+      <figure><img src="data:image/jpeg;base64,__05-medicine-reminders__" alt="Medicine reminders for today"><figcaption>Never miss a dose</figcaption></figure>
+      <figure><img src="data:image/jpeg;base64,__07-my-health__" alt="My Health vitals screen"><figcaption>Your vitals, explained</figcaption></figure>
+      <figure><img src="data:image/jpeg;base64,__06-steps__" alt="Daily steps tracking"><figcaption>Track your daily steps</figcaption></figure>
+    </div>
+  </div></section>
+
+  <section class="stack"><div class="wide two">
+    <div>
+      <div class="eyebrow">Straight answers</div>
+      <h2>What the app <em>doesn’t</em> do.</h2>
+      <p>We would rather tell you up front.</p>
+    </div>
+    <ul class="faq">
+      <li><strong>It doesn’t diagnose.</strong> It carries the record; your clinician reads it.</li>
+      <li><strong>No payments in the app.</strong> Pay at the hospital counter; the receipt appears in the app.</li>
+      <li><strong>Records come from DivyaJivan hospitals.</strong> They appear for hospitals and clinics that run on DivyaJivan.</li>
+      <li><strong>Not an emergency service.</strong> In an emergency, call your local emergency number or go to a hospital.</li>
+    </ul>
+  </div></section>
+
+  <section class="center" id="get"><div class="wrap">
+    <div class="eyebrow">Free on iOS &amp; Android</div>
+    <h2>Bring your family’s <em>health home.</em></h2>
+    <p>Scan to download Divyajivan, or open the web app.</p>
+    <div class="get">
+      <div class="qr"><img src="data:image/png;base64,__qrp__" alt="QR code for Google Play">Google Play</div>
+      <div class="qr"><img src="data:image/png;base64,__qra__" alt="QR code for the App Store">App Store</div>
+    </div>
+    <div class="tag">Web: <span class="url">divyajivanhealth.in</span></div>
+  </div></section>
+</main>
+<footer><span>© Divyajivan Healthcare</span><span>Divyajivan does not diagnose and is not an emergency service.</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(()=>{
+const SHOTS=['__01-home__','__03-reports__','__04-prescription__','__05-medicine-reminders__','__07-my-health__','__06-steps__'];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const cv=document.getElementById('gl');
+const R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:false});
+R.setPixelRatio(Math.min(devicePixelRatio,2));R.setClearColor(0x03080B,1);
+const S=new THREE.Scene();S.fog=new THREE.FogExp2(0x03080B,0.035);
+const C=new THREE.PerspectiveCamera(55,1,0.1,200);C.position.set(0,0,14);
+// ---- particles: dust -> logo -> tunnel ----
+const N=reduce?4000:9000;
+const pos=new Float32Array(N*3),dust=new Float32Array(N*3),logoT=new Float32Array(N*3),tun=new Float32Array(N*3),col=new Float32Array(N*3),sz=new Float32Array(N);
+for(let i=0;i<N;i++){const r=6+Math.random()*16,a=Math.random()*Math.PI*2,b=(Math.random()-.5)*Math.PI;
+ dust[i*3]=Math.cos(a)*Math.cos(b)*r;dust[i*3+1]=Math.sin(b)*r*.7;dust[i*3+2]=Math.sin(a)*Math.cos(b)*r-4;
+ const ta=Math.random()*Math.PI*2,tz=-Math.random()*120,tr=4+Math.random()*2.5;tun[i*3]=Math.cos(ta)*tr;tun[i*3+1]=Math.sin(ta)*tr;tun[i*3+2]=tz;
+ sz[i]=Math.random()*1.6+.4;col[i*3]=.9;col[i*3+1]=.78;col[i*3+2]=.48;}
+pos.set(dust);logoT.set(dust);
+const G=new THREE.BufferGeometry();G.setAttribute('position',new THREE.BufferAttribute(pos,3));G.setAttribute('color',new THREE.BufferAttribute(col,3));G.setAttribute('size',new THREE.BufferAttribute(sz,1));
+const M=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,uniforms:{px:{value:R.getPixelRatio()}},
+ vertexShader:'attribute float size;attribute vec3 color;varying vec3 vc;uniform float px;void main(){vc=color;vec4 mv=modelViewMatrix*vec4(position,1.);gl_PointSize=size*px*(38./-mv.z);gl_Position=projectionMatrix*mv;}',
+ fragmentShader:'varying vec3 vc;void main(){float d=length(gl_PointCoord-.5);if(d>.5)discard;gl_FragColor=vec4(vc,pow(1.-d*2.,1.6));}'});
+const P=new THREE.Points(G,M);S.add(P);
+// sample logo pixels for particle targets + colors
+const li=new Image();li.onload=()=>{const c=document.createElement('canvas'),w=160,h=Math.round(160*li.height/li.width);c.width=w;c.height=h;const x=c.getContext('2d');x.drawImage(li,0,0,w,h);const d=x.getImageData(0,0,w,h).data,pts=[];
+ for(let y=0;y<h;y++)for(let X=0;X<w;X++){const k=(y*w+X)*4;if(d[k+3]>120)pts.push([X,y,d[k]/255,d[k+1]/255,d[k+2]/255]);}
+ for(let i=0;i<N;i++){const p=pts[(Math.random()*pts.length)|0];logoT[i*3]=(p[0]-w/2)*.055;logoT[i*3+1]=-(p[1]-h/2)*.055+.6;logoT[i*3+2]=(Math.random()-.5)*.6;col[i*3]=p[2];col[i*3+1]=p[3];col[i*3+2]=p[4];}
+ G.attributes.color.needsUpdate=true;};li.src='data:image/png;base64,__logo__';
+// ---- floating app screens ----
+const loader=new THREE.TextureLoader(),cards=[];
+SHOTS.forEach((b,i)=>{const t=loader.load('data:image/jpeg;base64,'+b);t.minFilter=THREE.LinearFilter;
+ const g=new THREE.PlaneGeometry(2.4,5.2);const m=new THREE.MeshBasicMaterial({map:t,transparent:true,opacity:0,side:THREE.DoubleSide});
+ const me=new THREE.Mesh(g,m);const side=i%2?1:-1;me.userData={x:side*(3.2+Math.random()*.8),y:(Math.random()-.5)*1.6,z:-14-i*11,rx:(Math.random()-.5)*.3,ry:-side*.45};
+ const fr=new THREE.Mesh(new THREE.PlaneGeometry(2.62,5.42),new THREE.MeshBasicMaterial({color:0x0D1B21,transparent:true,opacity:0}));fr.position.z=-.01;me.add(fr);
+ const glow=new THREE.Mesh(new THREE.PlaneGeometry(3.6,6.4),new THREE.MeshBasicMaterial({color:i%2?0x4FB8EE:0x5BD46B,transparent:true,opacity:0,blending:THREE.AdditiveBlending}));glow.position.z=-.05;me.add(glow);
+ S.add(me);cards.push(me);});
+// ---- rings ----
+const rings=[];for(let i=0;i<14;i++){const r=new THREE.Mesh(new THREE.TorusGeometry(5.6,.012,8,120),new THREE.MeshBasicMaterial({color:i%2?0x4FB8EE:0x5BD46B,transparent:true,opacity:0}));r.position.z=-8-i*6;S.add(r);rings.push(r);}
+// ---- loop ----
+let sc=0,ss=0,mx=0,my=0;const prog=document.getElementById('prog');
+addEventListener('scroll',()=>{const m=document.documentElement.scrollHeight-innerHeight;sc=m>0?scrollY/m:0;prog.style.width=(sc*100)+'%';},{passive:true});
+addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;},{passive:true});
+function size(){const w=innerWidth,h=innerHeight;R.setSize(w,h,false);C.aspect=w/h;C.fov=w<720?70:55;C.updateProjectionMatrix();}addEventListener('resize',size);size();
+const t0=performance.now(),cl=v=>Math.max(0,Math.min(1,v)),sm=v=>v*v*(3-2*v);
+function frame(now){const t=(now-t0)/1000;ss+=(sc-ss)*.08;
+ const form=sm(cl((t-.4)/2.2))*(1-sm(cl((ss-.04)/.14)));const tw=sm(cl((ss-.08)/.2));
+ const a=G.attributes.position.array;
+ for(let i=0;i<N*3;i+=3){const n=Math.sin(t*.6+i)*.04;
+  const lx=dust[i]+(logoT[i]-dust[i])*form,ly=dust[i+1]+(logoT[i+1]-dust[i+1])*form,lz=dust[i+2]+(logoT[i+2]-dust[i+2])*form;
+  a[i]=lx+(tun[i]-lx)*tw+n;a[i+1]=ly+(tun[i+1]-ly)*tw+n;a[i+2]=lz+(tun[i+2]-lz)*tw;}
+ G.attributes.position.needsUpdate=true;P.rotation.z=tw*t*.05;P.rotation.y=(1-tw)*Math.sin(t*.2)*.15;
+ const camZ=14-ss*92;C.position.z=camZ;C.position.x+=(mx*1.2-C.position.x)*.05;C.position.y+=(-my*.8-C.position.y)*.05;C.lookAt(C.position.x*.3,C.position.y*.3,camZ-10);
+ cards.forEach((c,i)=>{const u=c.userData,d=u.z-camZ,vis=cl(1-Math.abs(d+9)/9)*tw;c.position.set(u.x,u.y+Math.sin(t*.8+i)*.15,u.z);c.rotation.set(u.rx,u.ry+Math.sin(t*.5+i)*.08,0);
+  c.material.opacity=vis;c.children[0].material.opacity=vis;c.children[1].material.opacity=vis*.12;});
+ rings.forEach((r,i)=>{const d=r.position.z-camZ;r.material.opacity=cl(1-Math.abs(d+10)/14)*tw*.5;r.rotation.z=t*.1*(i%2?1:-1);});
+ R.render(S,C);requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+})();
+</script>
